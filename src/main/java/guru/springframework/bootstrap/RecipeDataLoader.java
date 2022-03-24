@@ -49,46 +49,22 @@ public class RecipeDataLoader implements CommandLineRunner {
                 "3. Add remaining ingredients to taste.\n4. Serve immediately.");
         perfectGuacamole.getCategories().add(mexicanCategory);
 
-        Ingredient avocadosForGuacamole = new Ingredient();
-        avocadosForGuacamole.setDescription("Avocados");
-        avocadosForGuacamole.setAmount(BigDecimal.valueOf(2.0));
-        avocadosForGuacamole.setUom(quantity);
-        avocadosForGuacamole.setRecipe(perfectGuacamole);
-        perfectGuacamole.getIngredients().add(avocadosForGuacamole);
+        Ingredient avocadosForGuacamole = new Ingredient("Avocados", new BigDecimal("2.0"), quantity);
+        Ingredient saltForGuacamole = new Ingredient("Salt", new BigDecimal("0.25"), teaspoon);
+        Ingredient fleshLimeForGuacamole = new Ingredient("Flesh Lime", new BigDecimal("1"), tableSpoon);
+        Ingredient redOnionForGuacamole = new Ingredient("Red Onion", new BigDecimal("3"), tableSpoon);
+        Ingredient groundBlackPaperForGuacamole = new Ingredient("Ground Black Paper", new BigDecimal("1"), pinch);
 
-        Ingredient saltForGuacamole = new Ingredient();
-        saltForGuacamole.setDescription("Salt");
-        saltForGuacamole.setAmount(BigDecimal.valueOf(0.25));
-        saltForGuacamole.setUom(teaspoon);
-        saltForGuacamole.setRecipe(perfectGuacamole);
-        perfectGuacamole.getIngredients().add(saltForGuacamole);
-
-        Ingredient fleshLimeForGuacamole = new Ingredient();
-        fleshLimeForGuacamole.setDescription("Flesh Lime");
-        fleshLimeForGuacamole.setAmount(BigDecimal.valueOf(1));
-        fleshLimeForGuacamole.setUom(tableSpoon);
-        fleshLimeForGuacamole.setRecipe(perfectGuacamole);
-        perfectGuacamole.getIngredients().add(fleshLimeForGuacamole);
-
-        Ingredient redOnionForGuacamole = new Ingredient();
-        redOnionForGuacamole.setDescription("Red Onion");
-        redOnionForGuacamole.setAmount(BigDecimal.valueOf(3));
-        redOnionForGuacamole.setUom(tableSpoon);
-        redOnionForGuacamole.setRecipe(perfectGuacamole);
-        perfectGuacamole.getIngredients().add(redOnionForGuacamole);
-
-        Ingredient groundBlackPaperForGuacamole = new Ingredient();
-        groundBlackPaperForGuacamole.setDescription("Ground Black Paper");
-        groundBlackPaperForGuacamole.setAmount(BigDecimal.valueOf(1));
-        groundBlackPaperForGuacamole.setUom(pinch);
-        groundBlackPaperForGuacamole.setRecipe(perfectGuacamole);
-        perfectGuacamole.getIngredients().add(groundBlackPaperForGuacamole);
+        perfectGuacamole.addIngredient(avocadosForGuacamole);
+        perfectGuacamole.addIngredient(saltForGuacamole);
+        perfectGuacamole.addIngredient(fleshLimeForGuacamole);
+        perfectGuacamole.addIngredient(redOnionForGuacamole);
+        perfectGuacamole.addIngredient(groundBlackPaperForGuacamole);
 
         perfectGuacamole.setDifficulty(easyDifficulty);
 
         Notes perfectGuacamoleNotes = new Notes();
         perfectGuacamoleNotes.setRecipeNotes("Perfect Guacamole Notes...");
-        perfectGuacamoleNotes.setRecipe(perfectGuacamole);
         perfectGuacamole.setNotes(perfectGuacamoleNotes);
 
         recipeRepository.save(perfectGuacamole);
@@ -108,74 +84,30 @@ public class RecipeDataLoader implements CommandLineRunner {
                 "5. Assemble the tacos.");
         spicyGrilledChickenTacos.getCategories().add(americanCategory);
 
-        Ingredient anchoChiliPowderForGrilledChicken = new Ingredient();
-        anchoChiliPowderForGrilledChicken.setDescription("Ancho Chili Powder");
-        anchoChiliPowderForGrilledChicken.setAmount(BigDecimal.valueOf(2.0));
-        anchoChiliPowderForGrilledChicken.setUom(tableSpoon);
-        anchoChiliPowderForGrilledChicken.setRecipe(spicyGrilledChickenTacos);
-        spicyGrilledChickenTacos.getIngredients().add(anchoChiliPowderForGrilledChicken);
+        Ingredient anchoChiliPowderForGrilledChicken = new Ingredient("Ancho Chili Powder", new BigDecimal("2"), tableSpoon);
+        Ingredient driedOreganoForGrilledChicken = new Ingredient("Dried Oregano", new BigDecimal("1"), teaspoon);
+        Ingredient driedCuminForGrilledChicken = new Ingredient("Dried Cumin", new BigDecimal("1"), teaspoon);
+        Ingredient sugarForGrilledChicken = new Ingredient("Sugar", new BigDecimal("1"), teaspoon);
+        Ingredient saltForGrilledChicken = new Ingredient("Salt", new BigDecimal("0.5"), teaspoon);
+        Ingredient garlicForGrilledChicken = new Ingredient("Garlic", new BigDecimal("1"), quantity);
+        Ingredient orangeJuiceForGrilledChicken = new Ingredient("Orange Juice", new BigDecimal("3"), tableSpoon);
+        Ingredient oliveOilJuiceForGrilledChicken = new Ingredient("Olive Oil", new BigDecimal("2"), tableSpoon);
+        Ingredient chickenForGrilledChicken = new Ingredient("Boneless Chicken", new BigDecimal("1.25"), pounds);
 
-        Ingredient driedOreganoForGrilledChicken = new Ingredient();
-        driedOreganoForGrilledChicken.setDescription("Dried Oregano");
-        driedOreganoForGrilledChicken.setAmount(BigDecimal.valueOf(1));
-        driedOreganoForGrilledChicken.setUom(teaspoon);
-        driedOreganoForGrilledChicken.setRecipe(spicyGrilledChickenTacos);
-        spicyGrilledChickenTacos.getIngredients().add(driedOreganoForGrilledChicken);
-
-        Ingredient driedCuminForGrilledChicken = new Ingredient();
-        driedCuminForGrilledChicken.setDescription("Dried Cumin");
-        driedCuminForGrilledChicken.setAmount(BigDecimal.valueOf(1));
-        driedCuminForGrilledChicken.setUom(teaspoon);
-        driedCuminForGrilledChicken.setRecipe(spicyGrilledChickenTacos);
-        spicyGrilledChickenTacos.getIngredients().add(driedCuminForGrilledChicken);
-
-        Ingredient sugarForGrilledChicken = new Ingredient();
-        sugarForGrilledChicken.setDescription("Sugar");
-        sugarForGrilledChicken.setAmount(BigDecimal.valueOf(1));
-        sugarForGrilledChicken.setUom(teaspoon);
-        sugarForGrilledChicken.setRecipe(spicyGrilledChickenTacos);
-        spicyGrilledChickenTacos.getIngredients().add(sugarForGrilledChicken);
-
-        Ingredient saltForGrilledChicken = new Ingredient();
-        saltForGrilledChicken.setDescription("Salt");
-        saltForGrilledChicken.setAmount(BigDecimal.valueOf(0.5));
-        saltForGrilledChicken.setUom(teaspoon);
-        saltForGrilledChicken.setRecipe(spicyGrilledChickenTacos);
-        spicyGrilledChickenTacos.getIngredients().add(saltForGrilledChicken);
-
-        Ingredient garlicForGrilledChicken = new Ingredient();
-        garlicForGrilledChicken.setDescription("Garlic");
-        garlicForGrilledChicken.setAmount(BigDecimal.valueOf(1));
-        garlicForGrilledChicken.setUom(quantity);
-        garlicForGrilledChicken.setRecipe(spicyGrilledChickenTacos);
-        spicyGrilledChickenTacos.getIngredients().add(garlicForGrilledChicken);
-
-        Ingredient orangeJuiceForGrilledChicken = new Ingredient();
-        orangeJuiceForGrilledChicken.setDescription("Orange Juice");
-        orangeJuiceForGrilledChicken.setAmount(BigDecimal.valueOf(3));
-        orangeJuiceForGrilledChicken.setUom(tableSpoon);
-        orangeJuiceForGrilledChicken.setRecipe(spicyGrilledChickenTacos);
-        spicyGrilledChickenTacos.getIngredients().add(orangeJuiceForGrilledChicken);
-
-        Ingredient oliveOilJuiceForGrilledChicken = new Ingredient();
-        oliveOilJuiceForGrilledChicken.setDescription("Olive Oil");
-        oliveOilJuiceForGrilledChicken.setAmount(BigDecimal.valueOf(2));
-        oliveOilJuiceForGrilledChicken.setUom(tableSpoon);
-        oliveOilJuiceForGrilledChicken.setRecipe(spicyGrilledChickenTacos);
-        spicyGrilledChickenTacos.getIngredients().add(oliveOilJuiceForGrilledChicken);
-
-        Ingredient chickenForGrilledChicken = new Ingredient();
-        chickenForGrilledChicken.setDescription("Boneless Chicken");
-        chickenForGrilledChicken.setAmount(BigDecimal.valueOf(1.25));
-        chickenForGrilledChicken.setUom(pounds);
-        chickenForGrilledChicken.setRecipe(spicyGrilledChickenTacos);
-        spicyGrilledChickenTacos.getIngredients().add(chickenForGrilledChicken);
+        spicyGrilledChickenTacos.addIngredient(anchoChiliPowderForGrilledChicken);
+        spicyGrilledChickenTacos.addIngredient(driedOreganoForGrilledChicken);
+        spicyGrilledChickenTacos.addIngredient(driedCuminForGrilledChicken);
+        spicyGrilledChickenTacos.addIngredient(sugarForGrilledChicken);
+        spicyGrilledChickenTacos.addIngredient(saltForGrilledChicken);
+        spicyGrilledChickenTacos.addIngredient(garlicForGrilledChicken);
+        spicyGrilledChickenTacos.addIngredient(orangeJuiceForGrilledChicken);
+        spicyGrilledChickenTacos.addIngredient(oliveOilJuiceForGrilledChicken);
+        spicyGrilledChickenTacos.addIngredient(chickenForGrilledChicken);
 
         spicyGrilledChickenTacos.setDifficulty(moderateDifficulty);
 
         Notes spicyGrilledChickenTacosNotes = new Notes();
         spicyGrilledChickenTacosNotes.setRecipeNotes("Spicy Grilled Chicken Tacos Notes...");
-        spicyGrilledChickenTacosNotes.setRecipe(spicyGrilledChickenTacos);
         spicyGrilledChickenTacos.setNotes(spicyGrilledChickenTacosNotes);
 
         recipeRepository.save(spicyGrilledChickenTacos);
