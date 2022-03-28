@@ -24,15 +24,11 @@ public class RecipeServiceImplTest {
     @Test
     public void findRecipes() {
 
-        Recipe recipe1 = new Recipe();
-        Recipe recipe2 = new Recipe();
-        recipe1.setDescription("1st");
-        recipe2.setDescription("2nd");
-        Set<Recipe> recipeData = new HashSet<>();
-        recipeData.add(recipe1);
-        recipeData.add(recipe2);
+        Set<Recipe> recipeSet = new HashSet<>();
+        recipeSet.add(Recipe.builder().id(1L).build());
+        recipeSet.add(Recipe.builder().id(2L).build());
 
-        when(recipeRepository.findAll()).thenReturn(recipeData);
+        when(recipeRepository.findAll()).thenReturn(recipeSet);
 
         Set<Recipe> recipes = underTest.findRecipes();
 
