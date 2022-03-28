@@ -5,6 +5,10 @@ import guru.springframework.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
 import java.util.HashSet;
@@ -29,8 +33,8 @@ public class IndexControllerTest {
 
         //given
         Set<Recipe> recipeSet = new HashSet<>();
-        recipeSet.add(Recipe.builder().id(1L).build());
-        recipeSet.add(Recipe.builder().id(2L).build());
+        recipeSet.add(mock(Recipe.class));
+        recipeSet.add(mock(Recipe.class));
 
         when(recipeService.findRecipes()).thenReturn(recipeSet);
         ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
@@ -44,5 +48,14 @@ public class IndexControllerTest {
         verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
         Set<Recipe> verifiedSet = argumentCaptor.getValue();
         assertEquals(2, verifiedSet.size());
+    }
+
+    @Test
+    public void testMockMVC() throws Exception {
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(underTestController).build();
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("index"));
     }
 }
