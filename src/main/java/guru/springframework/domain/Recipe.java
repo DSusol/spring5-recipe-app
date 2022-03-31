@@ -22,7 +22,7 @@ public class Recipe {
     private Integer prepTime;
     private Integer cookTime;
     private Integer servings;
-    private String source;
+    private Integer source;
     private String url;
 
     @Lob
@@ -55,5 +55,17 @@ public class Recipe {
         ingredient.setRecipe(this);
         this.ingredients.add(ingredient);
         return this;
+    }
+
+    public String[] getCategoryList() {
+        String[] cats = {"-", "-", "-"};
+        int i = 0;
+        for(Category category: categories){
+            cats[i++] = category.getDescription();
+            if(i == 2) {
+                break;
+            }
+        }
+        return cats;
     }
 }

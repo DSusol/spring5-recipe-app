@@ -46,11 +46,12 @@ public class RecipeDataLoader implements CommandLineRunner {
         perfectGuacamole.setPrepTime(10);
         perfectGuacamole.setCookTime(0);
         perfectGuacamole.setServings(4);
-        perfectGuacamole.setSource("https://www.simplyrecipes.com");
+        perfectGuacamole.setSource(10);
         perfectGuacamole.setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
         perfectGuacamole.setDirections("1. Cut the avocado.\n2. Mash the avocado flesh.\n" +
                 "3. Add remaining ingredients to taste.\n4. Serve immediately.");
         perfectGuacamole.getCategories().add(mexicanCategory);
+        perfectGuacamole.getCategories().add(americanCategory);
 
         Ingredient avocadosForGuacamole = new Ingredient("Avocados", new BigDecimal("2.0"), quantity);
         Ingredient saltForGuacamole = new Ingredient("Salt", new BigDecimal("0.25"), teaspoon);
@@ -78,7 +79,7 @@ public class RecipeDataLoader implements CommandLineRunner {
         spicyGrilledChickenTacos.setPrepTime(20);
         spicyGrilledChickenTacos.setCookTime(15);
         spicyGrilledChickenTacos.setServings(5);
-        spicyGrilledChickenTacos.setSource("https://www.simplyrecipes.com");
+        spicyGrilledChickenTacos.setSource(35);
         spicyGrilledChickenTacos.setUrl("https://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
         spicyGrilledChickenTacos.setDirections("1. Prepare a gas or charcoal grill for medium-high, direct heat.\n" +
                 "2. Make the marinade and coat the chicken.\n" +

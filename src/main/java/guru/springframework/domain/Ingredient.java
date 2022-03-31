@@ -30,4 +30,9 @@ public class Ingredient {
         this.amount = amount;
         this.uom = uom;
     }
+
+    @Override
+    public String toString() {
+        return amount + " " + uom.getDescription() + " of " + description;
+    }
 }
