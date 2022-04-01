@@ -1,5 +1,7 @@
 package guru.springframework.services;
 
+import guru.springframework.converters.RecipeCommandToRecipe;
+import guru.springframework.converters.RecipeToRecipeCommand;
 import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import org.junit.Test;
@@ -20,6 +22,8 @@ public class RecipeServiceImplTest {
     @InjectMocks
     RecipeServiceImpl serviceUnderTest;
     RecipeRepository recipeRepository = mock(RecipeRepository.class);
+    RecipeToRecipeCommand recipeToRecipeCommand = mock(RecipeToRecipeCommand.class);
+    RecipeCommandToRecipe recipeCommandToRecipe = mock(RecipeCommandToRecipe.class);
 
     @Test
     public void findRecipes() {
