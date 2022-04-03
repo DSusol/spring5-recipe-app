@@ -1,7 +1,9 @@
 package guru.springframework.services;
 
 import guru.springframework.commands.IngredientCommand;
+import guru.springframework.converters.IngredientCommandToIngredient;
 import guru.springframework.converters.IngredientToIngredientCommand;
+import guru.springframework.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import guru.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import guru.springframework.domain.Ingredient;
 import guru.springframework.domain.Recipe;
@@ -24,18 +26,22 @@ public class IngredientServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
-    final IngredientToIngredientCommand ingredientConverter;
+    final IngredientToIngredientCommand ingredientToIngredientCommand;
+    final IngredientCommandToIngredient ingredientCommandToIngredient;
+
 
     IngredientServiceImpl serviceUnderTest;
 
     public IngredientServiceImplTest() {
-        this.ingredientConverter = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
+        this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
+        this.ingredientCommandToIngredient = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
     }
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        serviceUnderTest = new IngredientServiceImpl(recipeRepository, ingredientConverter);
+        serviceUnderTest = new IngredientServiceImpl(recipeRepository,
+                ingredientToIngredientCommand, ingredientCommandToIngredient);
     }
 
     @Test
@@ -63,6 +69,56 @@ public class IngredientServiceImplTest {
         //then
         assertNotNull(ingredientCommand);
         assertEquals(ingredientId2, ingredientCommand.getId());
+        verify(recipeRepository).findById(anyLong());
+    }
+
+    @Test
+    public void saveNewIngredient() {
+        //given
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Ingredient ingredient1 = new Ingredient();
+        ingredient1.setId(1L);
+        recipe.getIngredients().add(ingredient1);
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(1L);
+
+        //when
+        when(recipeRepository.findById(1L)).thenReturn(Optional.of(recipe));
+
+        IngredientCommand savedIngredientCommand = serviceUnderTest.saveIngredientCommand(ingredientCommand);
+
+        //then
+        assertEquals(2, recipe.getIngredients().size());
+        assertEquals(Long.valueOf(2L), savedIngredientCommand.getId());
+        verify(recipeRepository).findById(anyLong());
+    }
+
+    @Test
+    public void saveExistingIngredient() {
+        //given
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(2L);
+        ingredient.setDescription("To be replaced");
+        recipe.getIngredients().add(ingredient);
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setId(2L);
+        ingredientCommand.setRecipeId(1L);
+        ingredientCommand.setDescription("Verified");
+
+        //when
+        when(recipeRepository.findById(1L)).thenReturn(Optional.of(recipe));
+
+        IngredientCommand savedIngredientCommand = serviceUnderTest.saveIngredientCommand(ingredientCommand);
+
+        //then
+        assertEquals(1, recipe.getIngredients().size());
+        assertEquals(Long.valueOf(2L), savedIngredientCommand.getId());
+        assertEquals("Verified", savedIngredientCommand.getDescription());
         verify(recipeRepository).findById(anyLong());
     }
 }
