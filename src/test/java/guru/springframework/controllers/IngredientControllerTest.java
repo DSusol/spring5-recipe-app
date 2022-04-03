@@ -2,6 +2,7 @@ package guru.springframework.controllers;
 
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.commands.RecipeCommand;
+import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,9 @@ public class IngredientControllerTest {
     @Mock
     RecipeService recipeService;
 
+    @Mock
+    IngredientService ingredientService;
+
     IngredientController controllerUnderTest;
 
     MockMvc mockMvc;
@@ -29,12 +33,12 @@ public class IngredientControllerTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        controllerUnderTest = new IngredientController(recipeService);
+        controllerUnderTest = new IngredientController(recipeService, ingredientService);
         mockMvc = MockMvcBuilders.standaloneSetup(controllerUnderTest).build();
     }
 
     @Test
-    public void displayIngredient() throws Exception {
+    public void displayIngredientList() throws Exception {
         //given
         RecipeCommand recipe = new RecipeCommand();
         IngredientCommand ingredient1 = new IngredientCommand();
@@ -52,5 +56,20 @@ public class IngredientControllerTest {
                 .andExpect(model().attribute("recipe", instanceOf(RecipeCommand.class)));
 
         verify(recipeService).findCommandById(anyLong());
+    }
+
+    @Test
+    public void displayIngredient() throws Exception {
+        //given
+        IngredientCommand ingredientCommand = new IngredientCommand();
+
+        when(ingredientService.findByRecipeIdAndIngredientId(2L, 4L)).thenReturn(ingredientCommand);
+
+        mockMvc.perform(get("/recipe/2/ingredient/4/show"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/ingredient/show"))
+                .andExpect(model().attribute("ingredient", instanceOf(IngredientCommand.class)));
+
+        verify(ingredientService).findByRecipeIdAndIngredientId(anyLong(), anyLong());
     }
 }
