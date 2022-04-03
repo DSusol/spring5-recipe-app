@@ -13,10 +13,12 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -77,22 +79,27 @@ public class IngredientServiceImplTest {
         //given
         Recipe recipe = new Recipe();
         recipe.setId(1L);
+
         Ingredient ingredient1 = new Ingredient();
         ingredient1.setId(1L);
+        ingredient1.setDescription("Description 1");
+        ingredient1.setAmount(BigDecimal.valueOf(3));
         recipe.getIngredients().add(ingredient1);
 
         IngredientCommand ingredientCommand = new IngredientCommand();
         ingredientCommand.setRecipeId(1L);
+        ingredientCommand.setDescription("Description");
+        ingredientCommand.setAmount(BigDecimal.valueOf(2));
 
         //when
         when(recipeRepository.findById(1L)).thenReturn(Optional.of(recipe));
 
-        IngredientCommand savedIngredientCommand = serviceUnderTest.saveIngredientCommand(ingredientCommand);
+        serviceUnderTest.saveIngredientCommand(ingredientCommand);
 
         //then
         assertEquals(2, recipe.getIngredients().size());
-        assertEquals(Long.valueOf(2L), savedIngredientCommand.getId());
         verify(recipeRepository).findById(anyLong());
+        verify(recipeRepository).save(any());
     }
 
     @Test

@@ -60,14 +60,20 @@ public class IngredientServiceImpl implements IngredientService {
         if (relatedRecipe == null) {
             throw new RuntimeException("Ingredient doesn't have recipe.");
         }
+        ingredient.setRecipe(relatedRecipe);
 
         if (ingredientCommand.getId() == null) {
-            ingredient.setId((long) (relatedRecipe.getIngredients().size() + 1));
             relatedRecipe.getIngredients().add(ingredient);
-            return ingredientToIngredientCommand.convert(ingredient);
+            recipeRepository.save(relatedRecipe);
+
+            Ingredient savedIngredient = relatedRecipe.getIngredients().stream()
+                    .filter(recipeIngredients -> recipeIngredients.getDescription().equals(ingredientCommand.getDescription()))
+                    .filter(recipeIngredients -> recipeIngredients.getAmount().equals(ingredientCommand.getAmount()))
+                    .findFirst().orElse(null);
+
+            return ingredientToIngredientCommand.convert(savedIngredient);
         }
 
-        ingredient.setRecipe(relatedRecipe);
         for (Ingredient recipeIngredient : relatedRecipe.getIngredients()) {
             if (recipeIngredient.getId().equals(ingredientCommand.getId())) {
                 recipeIngredient.setDescription(ingredient.getDescription());
