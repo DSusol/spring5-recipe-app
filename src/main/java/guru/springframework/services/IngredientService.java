@@ -8,4 +8,6 @@ public interface IngredientService {
 
     IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);
 
+    void deleteIngredientById(Long recipeId, Long ingredientId);
+
 }

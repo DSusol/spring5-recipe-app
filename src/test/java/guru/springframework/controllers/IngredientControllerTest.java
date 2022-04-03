@@ -154,4 +154,12 @@ public class IngredientControllerTest {
 
         verify(unitOfMeasureService).findUomCommands();
     }
+
+    @Test
+    public void deleteById() throws Exception {
+        mockMvc.perform(get("/recipe/2/ingredient/3/delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/recipe/2/ingredients"));
+        verify(ingredientService).deleteIngredientById(2L, 3L);
+    }
 }

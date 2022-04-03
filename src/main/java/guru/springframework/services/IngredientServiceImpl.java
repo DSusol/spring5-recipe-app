@@ -86,4 +86,18 @@ public class IngredientServiceImpl implements IngredientService {
 
         throw new RuntimeException("Incorrect recipe id found.");
     }
+
+    @Override
+    public void deleteIngredientById(Long recipeId, Long ingredientId) {
+        Recipe recipe = recipeRepository.findById(recipeId).orElse(null);
+        Ingredient foundIngredient = null;
+        for (Ingredient ingredient : recipe.getIngredients()) {
+            if (ingredient.getId().equals(ingredientId)) {
+                foundIngredient = ingredient;
+                break;
+            }
+        }
+        recipe.getIngredients().remove(foundIngredient);
+        recipeRepository.save(recipe);
+    }
 }
