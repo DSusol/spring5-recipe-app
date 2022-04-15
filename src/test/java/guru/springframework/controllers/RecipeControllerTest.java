@@ -2,6 +2,7 @@ package guru.springframework.controllers;
 
 import guru.springframework.commands.RecipeCommand;
 import guru.springframework.domain.Recipe;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -88,5 +91,16 @@ public class RecipeControllerTest {
                 .andExpect(view().name("redirect:/"));
 
         verify(recipeService).deleteById(anyLong());
+    }
+
+    @Test
+    public void shouldThrowNotFoundException() throws Exception {
+
+        Optional<Recipe> recipe = Optional.empty();
+
+        when(recipeService.findById(2L)).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/2/show"))
+                .andExpect(status().isNotFound());
     }
 }
