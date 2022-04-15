@@ -43,7 +43,7 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe findById(Long id) {
         Recipe recipe = recipeRepository.findById(id).orElse(null);
         if (recipe == null) {
-            throw new NotFoundException("This text should be displayed on web.");
+            throw new NotFoundException("This text should be displayed on web. ID = " + id);
         }
         return recipe;
     }
