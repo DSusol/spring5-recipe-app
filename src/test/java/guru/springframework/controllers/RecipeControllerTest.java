@@ -105,4 +105,13 @@ public class RecipeControllerTest {
                 .andExpect(view().name("404error"))
                 .andExpect(model().attribute("exception", instanceOf(Exception.class)));
     }
+
+    @Test
+    public void shouldThrowNumberFormatException() throws Exception {
+
+        mockMvc.perform(get("/recipe/test/show"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"))
+                .andExpect(model().attribute("exception", instanceOf(Exception.class)));
+    }
 }

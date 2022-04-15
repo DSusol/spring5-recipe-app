@@ -96,4 +96,9 @@ public class RecipeServiceImplTest {
         when(recipeRepository.findById(2L)).thenReturn(recipe);
         serviceUnderTest.findById(2L);
     }
+
+    @Test(expected = NumberFormatException.class)
+    public void findById_throwsNumberFormatException() {
+        serviceUnderTest.findById(Long.valueOf("abc"));
+    }
 }
