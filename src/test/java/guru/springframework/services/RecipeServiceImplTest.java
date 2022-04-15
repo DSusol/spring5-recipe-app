@@ -15,7 +15,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
@@ -52,15 +53,6 @@ public class RecipeServiceImplTest {
         assertNotNull(foundRecipe);
         assertEquals(recipe, foundRecipe);
         assertEquals(recipeId, foundRecipe.getId());
-        verify(recipeRepository).findById(anyLong());
-    }
-
-    @Test
-    public void findById_nullResult() {
-        when(recipeRepository.findById(anyLong())).thenReturn(Optional.empty());
-        Recipe foundRecipe = serviceUnderTest.findById(1L);
-
-        assertNull(foundRecipe);
         verify(recipeRepository).findById(anyLong());
     }
 
