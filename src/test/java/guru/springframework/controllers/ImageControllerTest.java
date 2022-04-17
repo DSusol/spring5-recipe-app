@@ -39,7 +39,9 @@ public class ImageControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         imageControllerUnderTest = new ImageController(imageService, recipeService);
-        mockMvc = MockMvcBuilders.standaloneSetup(imageControllerUnderTest).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(imageControllerUnderTest)
+                .setControllerAdvice(ControllerExceptionHandler.class)
+                .build();
     }
 
     @Test
@@ -82,7 +84,7 @@ public class ImageControllerTest {
         byte[] image = "fake image".getBytes();
         Byte[] boxedImage = new Byte[image.length];
         int i = 0;
-        for(byte aByte: image) {
+        for (byte aByte : image) {
             boxedImage[i++] = aByte;
         }
         recipeCommand.setImage(boxedImage);
@@ -97,5 +99,13 @@ public class ImageControllerTest {
 
         byte[] responseByte = response.getContentAsByteArray();
         assertEquals(image.length, responseByte.length);
+    }
+
+    @Test
+    public void badRequestTest() throws Exception {
+        mockMvc.perform(get("/recipe/test/image"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"))
+                .andExpect(model().attribute("exception", instanceOf(Exception.class)));
     }
 }
