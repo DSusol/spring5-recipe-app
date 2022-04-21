@@ -10,10 +10,13 @@ spring:
     database: mysql
     show-sql: true
 #    properties:
+#      hibernate:
+#        hbm2ddl:
+#          delimiter: ";"
 #      javax:
 #        persistence:
 #          schema-generation:
 #            create-source: metadata
 #            scripts:
 #              action: create
-#              create-target: guru_database_create.sql
+#              create-target: spring_database_create.sql
