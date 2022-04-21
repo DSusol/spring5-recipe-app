@@ -6,20 +6,22 @@ import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
 @Slf4j
+@Profile("default")
 @Component
-public class RecipeDataLoader implements CommandLineRunner {
+public class RecipeDataLoaderH2 implements CommandLineRunner {
 
     private final RecipeRepository recipeRepository;
     private final CategoryRepository categoryRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
 
-    public RecipeDataLoader(RecipeRepository recipeRepository, CategoryRepository categoryRepository,
-                            UnitOfMeasureRepository unitOfMeasureRepository) {
+    public RecipeDataLoaderH2(RecipeRepository recipeRepository, CategoryRepository categoryRepository,
+                              UnitOfMeasureRepository unitOfMeasureRepository) {
         this.recipeRepository = recipeRepository;
         this.categoryRepository = categoryRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
