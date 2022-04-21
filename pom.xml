@@ -74,6 +74,13 @@
             <version>3.0.0-M5</version>
             <type>maven-plugin</type>
         </dependency>
+
+        <!--MySQL Driver-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
